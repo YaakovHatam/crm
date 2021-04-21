@@ -26,7 +26,9 @@ const quriesAttributes = require('./attributes/query.attribute');
 // controllers
 const authCtrl = require('./controllers/auth.ctrl');
 const contactCtrl = require('./controllers/contact.ctrl');
+const reportCtrl = require('./controllers/report.ctrl');
 
+app.use('/reports', reportCtrl);
 
 app.use('/auth', userCredentials, authCtrl);
 
