@@ -15,7 +15,7 @@ router.post('/login', function (req, res) {
          }, process.env.SECRET_KEY, {
             expiresIn: '5h'
          });
-         return res.send(token);
+         return res.contentType('text/plain').send(token);
       } else {
          res.status(401).send();
       }
