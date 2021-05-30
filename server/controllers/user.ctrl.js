@@ -1,6 +1,6 @@
 const express = require('express');
-const Contact = require('./../models/contact');
-const userRepository = require('./../repositories/user.repository');
+const Contact = require('../models/contact');
+const userRepository = require('../repositories/user.repository');
 
 const router = express.Router();
 
@@ -25,16 +25,11 @@ router.get('/:id', function (req, res) {
 })
 
 router.get('/', function (req, res) {
-   const getOwnedUsers = userRepository.getOwned(req.user_id);
-   let contacts = [];
-   if (getOwnedUsers) {
-      const ownedUsersIds = getOwnedUsers.map(u => u.user_id);
-      contacts = contactsDb.filter(c => ownedUsersIds.indexOf(c.Contact_Owner) > -1);
-   }
+   userRepository.getOwned(req.user_id, function (err, getOwnedUsers) {
+      if (err) res.status(500).send();
+      res.send(getOwnedUsers);
+   });
 
-   contacts = contacts.concat(...contactsDb.filter(c => c.Contact_Owner === req.user_id));
-
-   res.send(contacts);
 })
 
 router.post('/', function (req, res) {

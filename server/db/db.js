@@ -12,7 +12,10 @@ connection.connect(function (err) {
 });
 
 function performSelect(query, values, callback) {
-   connection.query(query, values, function (err, results) {
+   connection.query(query, values, function (err, results, fields) {
+      if (fields.find(f => f.name === 'pwd')) {
+         results.forEach(r => delete r['pwd']);
+      }
       callback(err, results);
    });
 }

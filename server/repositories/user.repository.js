@@ -4,7 +4,7 @@ const db = require('./../db/db');
 function getById(id, callback) {
    db.performSelect('SELECT * FROM `users` WHERE `user_id` = ?', [id], function (err, res) {
       if (res.length == 1) {
-         callback(res[0]);
+         callback(null, res[0]);
       } else callback('no user');
    });
 }
@@ -20,12 +20,12 @@ function getOwnedUsers(id, callback) {
       callback(err, res);
    });
 }
-function getOwned(id, callback) {
-   getById(id, function (err, res) {
+function getOwned(user_id, callback) {
+   getById(user_id, function (err, res) {
       if (err) return callback(err);
 
       if (res.role === 'Admin') {
-         getOwnedUsers(res.id, function (err2, res2) {
+         getOwnedUsers(res.user_id, function (err2, res2) {
             callback(err2, res2);
          })
       } else callback(null, null);

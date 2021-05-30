@@ -27,7 +27,7 @@ const adminOnlyAttribute = require('./attributes/admin-only.attr');
 
 // controllers
 const authCtrl = require('./controllers/auth.ctrl');
-const contactCtrl = require('./controllers/contact.ctrl');
+const userCtrl = require('./controllers/user.ctrl');
 const reportCtrl = require('./controllers/report.ctrl');
 
 
@@ -52,9 +52,9 @@ app.post('/upload', function (req, res) {
    }
 })
 
-app.use('/api/v1/contact', ...middlewares, contactCtrl);
-app.use('/api/v1/account', ...middlewares, contactCtrl);
-app.use('/api/v1/user', ...middlewares, contactCtrl);
+//app.use('/api/v1/contact', ...middlewares, contactCtrl);
+// app.use('/api/v1/account', ...middlewares, contactCtrl);
+app.use('/api/v1/user', ...middlewares, userCtrl);
 app.use('/api/v1/reports', ...middlewares, adminOnlyAttribute, reportCtrl);
 
 app.listen(PORT, () => console.log(`server started at port ${PORT}`));
